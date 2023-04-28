@@ -11,6 +11,8 @@
 #define MAX_CLIENTS 10
 #define BUFFER_SIZE 1024
 
+//Code to handle multiple clients 
+
 int main(int argc, char *argv[])
 {
     if (argc != 2)
