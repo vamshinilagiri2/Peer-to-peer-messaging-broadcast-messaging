@@ -57,67 +57,91 @@ int main(int argc, char *argv[])
     FD_ZERO(&active_fds);
     FD_SET(server_socket, &active_fds);
     char buffer[BUFFER_SIZE];
+    int num_clients = 0;
 
-    while (1)
+   while (1)
     {
         read_fds = active_fds;
-
-        if (select(FD_SETSIZE, &read_fds, NULL, NULL, NULL) == -1)
+        while (true)
         {
-            perror("Failed to select sockets");
-            return 1;
-        }
-        if (FD_ISSET(server_socket, &read_fds))
-        {
-            struct sockaddr_in client_addr;
-            socklen_t client_len = sizeof(client_addr);
-            int client_socket = accept(server_socket, (struct sockaddr *)&client_addr, &client_len);
-            if (client_socket == -1)
+            fd_set read_fds = active_fds;
+            // Wait for activity on any socket
+            if (select(FD_SETSIZE, &read_fds, nullptr, nullptr, nullptr) == -1)
             {
-                perror("Failed to accept client connection");
+                perror("Failed to select sockets");
                 return 1;
             }
-            FD_SET(client_socket, &active_fds);
-
-            char client_ip[INET_ADDRSTRLEN];
-            inet_ntop(AF_INET, &client_addr.sin_addr, client_ip, INET_ADDRSTRLEN);
-            std::cout << "New connection from " << client_ip << ":" << ntohs(client_addr.sin_port) << "\n";
-        }
-        for (int i = 0; i < FD_SETSIZE; i++)
-        {
-            if (i != server_socket && FD_ISSET(i, &read_fds))
+            // Check for activity on client sockets
+            for (int i = 0; i < FD_SETSIZE; i++)
             {
-                int n = read(i, buffer, BUFFER_SIZE);
-
-                if (n == -1)
+                if (i != server_socket && FD_ISSET(i, &read_fds))
                 {
-                    perror("Failed to read from client socket");
-                    return 1;
-                }
-                else if (n == 0)
-                {
-                    close(i);
-                    FD_CLR(i, &active_fds);
-                }
-
-                else
-                {
-                    // Broadcast message to all clients except sender
-                    for (int j = 0; j < FD_SETSIZE; j++)
+                    int n = read(i, buffer, BUFFER_SIZE);
+                    if (n == -1)
                     {
-                        if (j != server_socket && j != i && FD_ISSET(j, &active_fds))
+                        perror("Failed to read from client socket");
+                        return 1;
+                    }
+                    else if (n == 0)
+                    {
+                        // Client disconnected
+                        close(i);
+                        FD_CLR(i, &active_fds);
+                    }
+                    else
+                    {
+                        // Broadcast message to all clients except sender
+                        for (int j = 0; j < FD_SETSIZE; j++)
                         {
-                            if (write(j, buffer, n) == -1)
+                            if (j != server_socket && j != i && FD_ISSET(j, &active_fds))
                             {
-                                perror("Failed to write to client socket");
-                                return 1;
+                                if (write(j, buffer, n) == -1)
+                                {
+                                    perror("Failed to write to client socket");
+                                    return 1;
+                                }
                             }
                         }
                     }
                 }
             }
+            // Check for new connections
+            if (FD_ISSET(server_socket, &read_fds))
+            {
+                if (num_clients == MAX_CLIENTS)
+                {
+                    // Send error message to client
+                    char error_msg[] = "Max number of clients reached. Please try again later.\n";
+                    if (write(server_socket, error_msg, strlen(error_msg)) == -1)
+                    {
+                        perror("Failed to send error message to client");
+                        return 1;
+                    }
+                    // Reject new connection
+                    close(accept(server_socket, NULL, NULL));
+                }
+                else
+                {
+                    struct sockaddr_in client_addr;
+                    socklen_t client_len = sizeof(client_addr);
+                    int client_socket = accept(server_socket, (struct sockaddr *)&client_addr, &client_len);
+                    if (client_socket == -1)
+                    {
+                        perror("Failed to accept client connection");
+                        return 1;
+                    }
+                    // Add client socket to active fds
+                    FD_SET(client_socket, &active_fds);
+                    num_clients++;
+                    // Print client address
+                    char client_ip[INET_ADDRSTRLEN];
+                    inet_ntop(AF_INET, &client_addr.sin_addr, client_ip, INET_ADDRSTRLEN);
+                    printf("New connection from %s:%d\n", client_ip, ntohs(client_addr.sin_port));
+                }
+            }
         }
     }
-
+    // End while loop and close server socket
+    close(server_socket);
     return 0;
 }
