@@ -11,7 +11,6 @@
 #include <algorithm>
 #include <netinet/in.h>
 
-#define MAX_CLIENTS 10
 #define BUFFER_SIZE 1024
 #define DELIMITER '\n'
 
@@ -162,12 +161,31 @@ int main(int argc, char *argv[])
 
     cout << "Server started on port " << port << "\n";
 
+//Maximum number of connections limited to 50 
+    int max_clients = 50;
     fd_set active_fds, read_fds;
     FD_ZERO(&active_fds);
     FD_SET(server_socket, &active_fds);
     vector<client_info> clients;
     while (true)
     {
+        int num_clients = clients.size();
+        if (num_clients >= max_clients)
+        {
+            // Reject new connections if the maximum number of clients allowed is reached
+            cout << "Maximum number of clients reached. Rejecting new connection.\n";
+            struct sockaddr_in client_addr;
+            socklen_t client_len = sizeof(client_addr);
+            int client_socket = accept(server_socket, (struct sockaddr *)&client_addr, &client_len);
+            if (client_socket == -1)
+            {
+                perror("Failed to accept client connection");
+                return 1;
+            }
+            writeString(client_socket, "Maximum number of clients reached. Try again later.\n");
+            close(client_socket);
+            continue;
+        }
         read_fds = active_fds;
         if (select(FD_SETSIZE, &read_fds, nullptr, nullptr, nullptr) == -1)
         {
