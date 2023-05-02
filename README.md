@@ -75,25 +75,25 @@ The code consists of the following main parts:
 
 **Signup:**
 
-![](RackMultipart20230502-1-79i3ox_html_62af31ef8c798e43.png)
+![signup.png](https://github.com/vamshinilagiri2/Peer-to-peer-messaging-broadcast-messaging/blob/main/screenshots/signup.png?raw=true)
 
 **Login:**
 
-![](RackMultipart20230502-1-79i3ox_html_1696ffa3f14dcfcd.png)
+![login.png](https://github.com/vamshinilagiri2/Peer-to-peer-messaging-broadcast-messaging/blob/main/screenshots/login.png?raw=true)
 
 **2. List of Active Clients:**
 
-![](RackMultipart20230502-1-79i3ox_html_5f4ccee507e778ee.png)
+![list.png](https://github.com/vamshinilagiri2/Peer-to-peer-messaging-broadcast-messaging/blob/main/screenshots/client-list.png?raw=true)
 
 **3. Broadcasting a Message:**
 
 **3.1 Client sending broadcast message :**
 
-![](RackMultipart20230502-1-79i3ox_html_eeacd90d97ca785d.png)
+![broadcast-1.png](https://github.com/vamshinilagiri2/Peer-to-peer-messaging-broadcast-messaging/blob/main/screenshots/broadcast-1.png?raw=true)
 
 **3.2 other client receiving broadcasted message :**
 
-![](RackMultipart20230502-1-79i3ox_html_db52f5e9dcfd72dd.png)
+![broadcast-2.png](https://github.com/vamshinilagiri2/Peer-to-peer-messaging-broadcast-messaging/blob/main/screenshots/broadcast-2.png?raw=true)
 
 **4. Establishing a Peer-to-Peer Connection:**
 
@@ -109,8 +109,8 @@ Example:
 
 **2. msg\_this-message-is-sent-through-p2p-communication\_127.0.0.1:35596**
 
-![](RackMultipart20230502-1-79i3ox_html_e83dd2495ede31fe.png)
+![p2p-1.png](https://github.com/vamshinilagiri2/Peer-to-peer-messaging-broadcast-messaging/blob/main/screenshots/p2p-1.png?raw=true)
 
 **4.2** Client receiving the p2p message:
 
-![](RackMultipart20230502-1-79i3ox_html_449eef8f0d2d5c33.png)
+![p2p-2.png](https://github.com/vamshinilagiri2/Peer-to-peer-messaging-broadcast-messaging/blob/main/screenshots/p2p-2.png?raw=true)
