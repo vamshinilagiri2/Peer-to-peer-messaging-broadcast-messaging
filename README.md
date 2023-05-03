@@ -45,10 +45,25 @@ This project is a Peer-to-Peer (P2P) communication system that allows clients to
 1. Compile the code using a C++ compiler.
 2. Run the compiled server application on a computer.
 3. Run the compiled client application on one or more computers.
-4. Clients can connect to the server, authenticate themselves using their username and password, and see the list of active clients.
-5. Clients can choose any active client to connect with, and the remote client will be asked to approve the new connection.
-6. Once a connection is successful, clients can send messages between themselves without the server.
-7. A client can request the server to broadcast a message to every client who is currently active. All clients who will be active within 30 minutes should receive the broadcast message.
+4. when the server code is compiled it will start the server on port 4400.
+5. when the client code is compiled the client will have 2 options 1 for login and 2 for signup.
+6. Client can either signup or login, if the client selects option 1 then the client will be asked to enter username and password 
+7. If the client selects option 2 then the client need to give a unique username and unique password and re-enter the password for confirmation
+8. the clients data will be saved in a csv file called "usercreds.csv" in the directory which will be used for client validation
+9. After successful login, client will have 4 options 1. to list the active clients connected to the server 2.to broadcast a message 3.to send a peer to peer message to the client who is connected to the server 
+10. If the client selects option 1, then the list of active clients connected to the server will be displayed in the following format: <br>
+     <br>Client 1: 127.0.0.1:35596<br>
+     Client 2: 126.2.2.2:45678<br>
+     .                        <br>
+     .                        <br>
+     Client n: .....          <br>
+<br>
+11. If the client selects the option2, then the user will be prompted to enter message that need to be broadcasted, when the client types the message and hit enter then the message will be broadcasted to all the clients connected to the server and active within 30 mintues. <br>
+12. Clients can send messages between themselves without the server <br>
+13. If clients want to send peer to peer messages then the client need to type the message in the following command <br>
+    <br>"msg_Message-to-be-sent_IP-addr&PORT" <br>
+  Ex: msg_HEllo-world_127.0.0.1:35596 <br>
+    <br>the IP and port number of the client can be taken from the list of clients ( option 1 )  <br> <br>
 
 **Code Explanation**
 
