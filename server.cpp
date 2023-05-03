@@ -314,7 +314,7 @@ void handle_new_client(int client_socket)
             response = "Message broadcasted successfully!\n";
             send(client_socket, response.c_str(), response.length(), 0);
         }
-        else if (first_segment == "p2p")
+        else if (first_segment == "peer")
         {
             std::cerr << "Entered 3rd segment." << std::endl;
             response = first_segment2;
