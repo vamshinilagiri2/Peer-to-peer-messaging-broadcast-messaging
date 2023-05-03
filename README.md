@@ -58,7 +58,7 @@ This project is a Peer-to-Peer (P2P) communication system that allows clients to
      .                        <br>
      Client n: .....          <br>
 <br>
-11. If the client selects the option2, then the user will be prompted to enter message that need to be broadcasted, when the client types the message and hit enter then the message will be broadcasted to all the clients connected to the server and active within 30 mintues. <br>
+11. If the client selects the option2, then the user will be prompted to enter message that need to be broadcasted, when the client types the message and hit enter then the message will be broadcasted to All clients who will be active within 30 minutes should receive the broadcast message. <br>
 12. Clients can send messages between themselves without the server <br>
 13. If clients want to send peer to peer messages then the client need to type the message in the following command <br>
     <br>"msg_Message-to-be-sent_IP-addr&PORT" <br>
