@@ -116,13 +116,13 @@ The code consists of the following main parts:
 
 Command:
 
-**msg\_"your-message"\_"IP-and-port-from-list-of-client"**
+**peer\_"your-message"\_"IP-and-port-from-list-of-client"**
 
 Example:
 
-1. **msg\_CNproject\_127.0.0.1:35596**
+1. **peer\_CNproject\_127.0.0.1:46926**
 
-**2. msg\_this-message-is-sent-through-p2p-communication\_127.0.0.1:35596**
+**2. peer\_THis-is-peer-to-peer-msg\_127.0.0.1:46926**
 
 ![p2p-1.png](https://github.com/vamshinilagiri2/Peer-to-peer-messaging-broadcast-messaging/blob/main/screenshots/p2p-1.png?raw=true)
 
